@@ -6,6 +6,17 @@ finishedList = document.querySelector(".finished-list");
 const PENDING_LS = "pending";
 const pendingArray = [];
 
+function delPending(event){
+  const delPendingBtn = event.target;
+  const delPendingDiv = delPendingBtn.parentNode
+  const delText = delPendingDiv.children[0].innerText;
+  const delIndex = pendingArray.findIndex(pendingTodo => pendingTodo.text === delText);
+  
+  pendingArray.splice(delIndex,1);
+  savePending();
+  delPendingDiv.remove();
+}
+
 function savePending(){
   localStorage.setItem(PENDING_LS,JSON.stringify(pendingArray));
 }
@@ -34,6 +45,8 @@ function showPendingList(pendingTodo){
   listDelBtn.innerHTML = `<i class="far fa-times-circle"></i>`;
   listFinishedBtn.innerHTML = `<i class="far fa-check-circle"></i>`;
   listLi.innerText = pendingTodo;
+
+  listDelBtn.addEventListener("click",delPending);
   
   makePendingArray(pendingTodo);
 }
