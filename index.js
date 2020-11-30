@@ -8,6 +8,29 @@ const FINISHED_LS = "finished";
 const pendingArray = [];
 const finishedArray = [];
 
+function backToPending(event){
+  const pendingFinishedBtn = event.target;
+  const pendingFinishedDiv = pendingFinishedBtn.parentNode;
+  const pendingText = pendingFinishedDiv.children[0].innerText;
+  const delIndex = finishedArray.findIndex(finishedTodo => finishedTodo.text === pendingText);
+  
+  showPendingList(pendingText);
+  finishedArray.splice(delIndex,1);
+  saveFinished();
+  pendingFinishedDiv.remove();
+}
+
+function delFinished(event){
+  const delFinishedBtn = event.target;
+  const delFinishedDiv = delFinishedBtn.parentNode
+  const delText = delFinishedDiv.children[0].innerText;
+  const delIndex = finishedArray.findIndex(finishedTodo => finishedTodo.text === delText);
+  
+  finishedArray.splice(delIndex,1);
+  saveFinished();
+  delFinishedDiv.remove();
+}
+
 function saveFinished(){
   localStorage.setItem(FINISHED_LS,JSON.stringify(finishedArray));
 }
@@ -38,19 +61,20 @@ function showFinishedList(finishedTodo){
   listLi.innerText = finishedTodo;
 
   makeFinishedArray(finishedTodo);
-  listDelBtn.addEventListener("click",)
+  listDelBtn.addEventListener("click",delFinished);
+  listBackBtn.addEventListener("click",backToPending);
 }
 
 function moveToFinished(event){
-  const finishedPandingBtn = event.target;
-  const finishedPandingDiv = finishedPandingBtn.parentNode;
-  const finishedText = finishedPandingDiv.children[0].innerText;
+  const finishedPendingBtn = event.target;
+  const finishedPendingDiv = finishedPendingBtn.parentNode;
+  const finishedText = finishedPendingDiv.children[0].innerText;
   const delIndex = pendingArray.findIndex(pendingTodo => pendingTodo.text === finishedText);
   
   showFinishedList(finishedText);
   pendingArray.splice(delIndex,1);
   savePending();
-  finishedPandingDiv.remove();
+  finishedPendingDiv.remove();
 }
 
 function delPending(event){
