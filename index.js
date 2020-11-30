@@ -3,13 +3,19 @@ todoInput = todoForm.querySelector(".todo-input"),
 pendingList = document.querySelector(".pending-list"),
 finishedList = document.querySelector(".finished-list");
 
+const PENDING_LS = "pending";
 const pendingArray = [];
+
+function savePending(){
+  localStorage.setItem(PENDING_LS,JSON.stringify(pendingArray));
+}
 
 function makePendingArray(pendingTodo){
   const pendingObj = {
     text:pendingTodo
   };
   pendingArray.push(pendingObj);
+  savePending();
 }
 
 function showPendingList(todo){

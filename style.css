@@ -1,0 +1,8 @@
+.fa-times-circle,
+.fa-check-circle {
+  pointer-events: none;
+}
+
+.list-container {
+  display: flex;
+}
