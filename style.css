@@ -1,5 +1,6 @@
 .fa-times-circle,
-.fa-check-circle {
+.fa-check-circle,
+.fa-undo-alt {
   pointer-events: none;
 }
 
