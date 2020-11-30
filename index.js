@@ -18,7 +18,7 @@ function makePendingArray(pendingTodo){
   savePending();
 }
 
-function showPendingList(todo){
+function showPendingList(pendingTodo){
   const listDiv = document.createElement("div");
   const listLi = document.createElement("li");
   const listDelBtn = document.createElement("button");
@@ -33,9 +33,9 @@ function showPendingList(todo){
 
   listDelBtn.innerHTML = `<i class="far fa-times-circle"></i>`;
   listFinishedBtn.innerHTML = `<i class="far fa-check-circle"></i>`;
-  listLi.innerText = todo;
+  listLi.innerText = pendingTodo;
   
-  makePendingArray(todo);
+  makePendingArray(pendingTodo);
 }
 
 function submitHandle(event){
@@ -47,6 +47,12 @@ function submitHandle(event){
 }
 
 function init(){
+  const string_loadedPending = localStorage.getItem(PENDING_LS);
+  const parsed_loadedPending = JSON.parse(string_loadedPending);
+
+  if(parsed_loadedPending !== null){
+    parsed_loadedPending.forEach(todo => showPendingList(todo.text));
+  }
   todoForm.addEventListener("submit",submitHandle);
 }
 init();
